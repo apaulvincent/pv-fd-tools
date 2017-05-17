@@ -1,0 +1,241 @@
+// ## Start Generic Styles 
+
+.tbl {
+	width: 100%;
+	display: table;
+}
+.tbl-row {
+	display: table-row;
+}
+.tbl-cell {
+	vertical-align: top;
+	display: table-cell;
+}
+
+// 	===================== IMAGE ANIMATIONS
+
+.img-wrap {
+	text-align: center;
+	display: inline-block;
+
+	img {
+		max-width: 100%;
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+.hover-grayscale {
+	@include transition(0.4s all ease);
+
+	&:hover {
+		-webkit-filter: grayscale(0.8);
+		filter: grayscale(0.8);
+	}
+}
+
+
+.hover-scale {
+	position: relative;
+	overflow: hidden;
+
+	.bg-scale {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-size: cover;
+		background-position: center;
+		@include transition(0.4s all ease);
+	}
+
+	&:hover {
+		.bg-scale {
+			@include transform(scale(1.1));
+		}
+	}
+}
+
+
+body, html, #root {
+  height: 100%; 
+  background: #fff;
+}
+
+.user-form-wrap {
+	position: relative;
+	height: 100%;
+}
+
+.user-form-inner {
+	background: #fcfcfc;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border: 1px solid #eee;
+	max-width: 360px;
+	margin: 0 auto;
+	padding: 20px 20px 40px;
+
+	@include transform(translate(-50%, -50%));
+
+
+	.branding {
+		text-align: center;
+		font-size: 26px;
+		margin: 0 0 20px;
+
+		span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		i {
+			font-size: 22px;
+			color: $c_c_1;
+		}
+	}
+
+	input {
+		border: 1px solid #ddd;
+		margin: 0 0 10px;
+	}
+
+	button {
+		width: 100%;
+
+		&:hover {
+			color: #fff;
+			background: #000;
+		}
+	}
+
+	.error-msg {
+		display: none;
+		background: #ff8080;
+		color: #fff;
+		padding: 5px 10px;
+		margin: 10px 0 0;
+		font-size: 12px;
+		text-align: center;
+
+		&.on {
+			display: block;
+		}
+	}
+}
+
+.app-wrap {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main-menu {
+  position: relative;
+  float: left; 
+  display: block;
+  width: 70px;
+  height: 100%;
+  margin: 0;
+  border-right: 1px solid #ddd;
+
+  a {
+    color: $c_c_1;
+    text-align: center;
+    display: block;
+    font-size: 28px;
+    padding: 0;
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #ddd;
+
+    &.selected {
+      background: $c_c_1;
+      color: #fff;
+    }
+  }
+
+  a.signout-btn {
+	  width: 100%;
+	  position: absolute;
+	  bottom: 0;
+	  border-top: 1px solid #ddd;
+  }
+}
+
+.list-header {
+	position: relative;
+	background: #fff;
+	height: 130px;
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+
+	.inner {
+		padding: 20px 15px 0;
+	}
+
+	 h3 {
+		 font-size: 28px;
+		 margin: 0 0 6px;
+		 line-height: 1;
+	 }
+
+	 .list-count {
+		 display: block;
+		 text-transform: uppercase;
+		 font-size: 12px;
+	 }
+
+	 .filter-wrap {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: #fafafa;
+		border-top: 1px solid #ddd;
+
+		.search-icon {
+			position: absolute;
+			bottom: 10px;
+			left: 10px; 
+			z-index: 1;
+			color: #ccc;
+		}
+
+		.clear-btn {
+			position: absolute;
+			bottom: 6px;
+			right: 5px; 
+			padding: 0 10px;
+			z-index: 3;
+			background: transparent;
+			border: none;
+			font-size: 16px;
+			line-height: 28px;
+			vertical-align: middle;
+			color: #666;
+
+			&:hover {
+				color: $c_c_1
+			}
+		}
+
+		.clear-btn[disabled] {
+			color: #ccc;
+		}
+
+
+		input {
+			position: relative;
+			background: transparent;
+			border: none;
+			z-index: 2;
+			padding-left: 35px;
+		}
+	 }
+}
+
+@import "tags";
+@import "notepad";

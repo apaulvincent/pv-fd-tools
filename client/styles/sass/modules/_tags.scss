@@ -1,0 +1,161 @@
+// Tag Listing...
+
+.tag-item {
+  position: relative;
+  margin: 15px 0;
+
+  a {
+    display: block;
+    padding: 5px 10px;
+    margin: 0 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    @include round-corners(8px);
+  }
+  
+  p {
+    margin: 0;
+    line-height: 1;
+    color: #666;
+    font-size: 14px;
+    font-weight: normal;
+    display: inline-block;
+  }
+
+  .btn-o {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+
+  span {
+    float: right;
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px 5px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #f2f2f2;
+    color: #999;
+    margin: 4px 0 0;
+  }
+
+}
+
+
+
+// React Tags
+
+.tag-field {
+  padding: 10px 0;
+
+  .tag-icon {
+    color: $c_c_1;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 10px;
+  }
+}
+
+.ReactTags__tags {
+  position: relative;
+  display: inline-block;
+
+  .ReactTags__tag,
+  .ReactTags__tagInput {
+      position: relative;
+      display: inline-block;
+  }
+
+  .ReactTags__tag {
+    font-size: 12px;
+    line-height: 16px;
+    vertical-align: middle;
+    padding: 4px 4px 4px 8px;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    margin: 0 3px 3px 0;
+    color: #60646e;
+    border-radius: 6px;
+  }
+
+  .ReactTags__tagInput input{
+    font-size: 12px;
+    line-height: 16px;
+    height: auto;
+    vertical-align: middle;
+    padding: 4px 8px;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    margin: 0 3px 3px 0;
+    width: 26px;
+    color: #60646e;
+    border-radius: 6px;
+
+      &:focus {
+        width: 80px;
+      }
+  }
+
+  .ReactTags__suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 130px;
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li.active {
+      span {
+        background: $c_c_1;
+        color: #fff;
+
+        mark {
+          color: #fff;
+        }
+      }
+    }
+
+    span {
+      padding: 5px 10px;
+      font-size: 13px;
+      display: block;
+      cursor: pointer;
+
+      &:hover {
+        background: $c_c_1;
+        
+
+        mark {
+          color: #fff;
+        }
+      }
+    }
+
+    mark {
+      font-weight: bold;
+      background: transparent;
+    }
+  }
+
+  .ReactTags__remove {
+      font-size: 16px;
+      display: inline-block;
+      margin: 0 0 0 5px;
+      width: 16px;
+      color: #60646e;
+      height: 16px;
+      line-height: 16px;
+      vertical-align: middle;
+      text-align: center;
+      cursor: pointer;
+  }
+}

@@ -1,0 +1,146 @@
+
+.pv-notepad {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: 350px;
+  min-width: 400px;
+
+  &.pv-add-note {
+     margin-left: 70px; 
+  }
+}
+
+
+.pv-notepad-head {
+
+    .tbl-cell {
+        vertical-align: middle;
+    }
+
+    .btn-wrap {
+        width: 60px;
+        text-align: right;
+        margin: 10px;
+        padding: 0 5px 0 0;
+    }
+
+    .edit-note-date {
+      padding: 0 10px 10px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+}
+
+
+
+.note-title[type="text"] {
+  font-size: 1.3em;
+  width: 100%;
+  padding: 10px;
+  height: auto;
+  line-height: 1;
+  border: none;
+  margin-bottom: 10px;
+}
+
+
+// Note Listing...
+
+.note-edit-view {
+  position: relative;
+  display: block;
+  height: 100%;
+  margin-left: 70px;
+  background: #fff;
+}
+
+.listing-wrap {
+  float: left; 
+  display: block;
+  width: 350px;
+  height: 100%;
+  
+  margin: 0;
+  overflow: hidden;
+  border-right: 1px solid #ddd;
+  padding-bottom: 130px;
+
+  .listing {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+.note-item {
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+
+  &.selected {
+    background: $c_c_1;
+    
+    * {
+      color: #fff;
+    }
+  }
+
+  &:hover {
+    .note-tool-bar {
+      @include opacity(1);
+    }
+  }
+
+  .note-tool-bar {
+    @include opacity(0);
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    width: 28px;
+    height: 28px;
+    font-size : 16px;
+    color: #666;
+    display: inline-block;
+     
+    &:hover {
+       color: $c_c_1;
+    }
+  }
+
+  h3 {
+	  font-size: 18px;
+    margin: 0 0 5px;
+    color: #666;
+  }
+
+  small {
+    color: #999;
+  }
+
+  a, span {
+    min-height: 130px;
+    display: block;
+    cursor: pointer;
+    padding: 15px;
+    text-decoration: none;
+  }
+
+  .dummy-item {
+    cursor: default;
+  }
+
+  p {
+    color: #666;
+    word-break: break-all;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "fd-tools-redux",
+  "version": "1.0.0",
+  "description": ":)",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server",
+    "build": "webpack",
+    "build:prod": "SET NODE_ENV=production&webpack -p"
+  },
+  "author": "PV",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.0",
+    "file-loader": "^0.11.1",
+    "history": "^4.6.1",
+    "node-sass": "^4.5.2",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-icons": "^2.2.3",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.0",
+    "react-router-redux": "^4.0.4",
+    "redux": "^3.5.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "devDependencies": {
+    "expect": "^1.18.0",
+    "expect-jsx": "^2.5.1",
+    "lodash": "^4.17.4",
+    "mocha": "^2.4.5"
+  }
+}
