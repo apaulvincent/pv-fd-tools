@@ -1,10 +1,8 @@
-import React, {Component} from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
 
 import Menu from '../components/Menu'
 import {Box} from '../components/Box'
-
-window.React = React
 
 class Main extends Component {
 	constructor(props){

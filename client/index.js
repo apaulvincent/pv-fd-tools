@@ -18,6 +18,9 @@ import { Router, Route, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './store';
 
+// Global React
+window.React = React 
+
 const router = (
   <Provider store={store}>
     <Router history={history}>
