@@ -21,7 +21,7 @@ class Home extends Component {
 				<div className="inner">
 					<label>Width</label>
 					<input type="number" ref="boxWidth" defaultValue={parseInt(width)} onChange={this.updateWidth} />
-					<br/>
+					
 					<label>Height</label>
 					<input type="number" ref="boxHeight" defaultValue={parseInt(height)} onChange={this.updateHeight} />
 				</div>
