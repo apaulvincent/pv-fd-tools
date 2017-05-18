@@ -2,7 +2,7 @@ import {Component} from 'react'
 import PropTypes from 'prop-types'
 
 import Menu from '../components/Menu'
-import {Box} from '../components/Box'
+import {BoxModel} from '../components/BoxModel'
 
 class Main extends Component {
 	constructor(props){
@@ -10,17 +10,36 @@ class Main extends Component {
 
 		this.state = {
 			boxStyles: {
-
+				width: 300,
+				height: 200,
+				background: '#f1f1f1'
 			}
 		}
 	}
 
+	updateStyles = (attribute, val) => {
+
+		const newObj = {};
+		newObj[attribute] = val;
+
+		this.setState({
+			boxStyles: Object.assign({}, this.state.boxStyles, newObj)
+		})
+	}
+	
 	render(){
+
+		console.log(this.props)
+
 		return(
 			<div className="app-wrap">
 				<Menu />
-				{React.cloneElement(this.props.children, this.props)}
-				<Box styles={this.state.boxStyles}/>
+				{React.cloneElement(this.props.children, {
+						width: this.state.boxStyles.width,
+						height: this.state.boxStyles.height,
+						updateStyles : this.updateStyles
+						})}
+				<BoxModel styles={this.state.boxStyles}/>
 			</div>
 		)
 	}

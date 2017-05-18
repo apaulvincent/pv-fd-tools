@@ -34,31 +34,3 @@ button, a, img {
 	}
 
 }
-
-.btn-neu {
-	color: #333;
-	background: #eee;
-
-	&:hover {
-		background: $c_c_1;
-		color: #fff;
-	}
-
-}
-
-.btn-sm {
-	font-size: em(12px);
-	height: 30px;
-	line-height: 30px;
-	padding: 0 10px;
-
-	@extend .btn;
-}
-
-.btn-o {
-  border: none;
-  font-size: 20px;
-  color: #666;
-  background: transparent;
-  padding: 0;
-}

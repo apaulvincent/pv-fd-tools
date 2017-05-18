@@ -1,6 +1,8 @@
-body {
-    background: #f2f2f2;
+body, html, #root {
+  height: 100%; 
+  background: #fff;
 }
+
 
 // =================================== 5x Grid
 
@@ -50,3 +52,31 @@ body {
 	}
 }
 
+
+
+.drawer-tool-bar {
+    height: 100%;
+    width: 260px;
+    float: left;
+    background: #f8f8f8;
+
+    .inner {
+        padding: 20px;
+    }
+}
+
+
+.box-model-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: 330px;
+  min-width: 400px;
+  text-align: center;
+}
+
+
+.box-model {
+    margin: 60px auto;
+}
