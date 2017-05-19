@@ -15,6 +15,7 @@ class Menu extends Component {
 			<nav className="main-menu">
 				<Link to="/" onlyActiveOnIndex activeClassName="selected"><HomeIcon/></Link>
 				<Link to="/box-shadow" activeClassName="selected"><NoteIcon/></Link>
+				<Link to="/border-radius" activeClassName="selected"><NoteIcon/></Link>
 			</nav>
 		)
 	}

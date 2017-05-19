@@ -1,6 +1,14 @@
 label {
 	display: block;
 	font-size: em(14px);
+	
+	@extend %clearfix;
+
+	strong {
+		font-weight: normal;
+		float: right;
+		color: #999;
+	}
 }
 
 

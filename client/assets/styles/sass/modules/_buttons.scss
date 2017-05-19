@@ -34,3 +34,30 @@ button, a, img {
 	}
 
 }
+
+.color-picker-popover {
+	position: absolute;
+	z-index: 2;
+}
+
+.color-picker-cover {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.color-picker-btn {
+	border: 1px solid #ccc;
+	background: #fff;
+	width: 60px;
+	padding: 5px;
+	@include round-corners(2px);
+
+	span {
+		display: block;
+		height: 12px;
+		@include round-corners(2px);
+	}
+}

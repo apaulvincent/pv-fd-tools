@@ -82,4 +82,15 @@ body, html, #root {
 
 .box-model {
     margin: 60px auto;
+    padding: 20px;
+    text-align: left;
+    
+    pre {
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+    }
+    code {
+        font-size: 12px;
+    }
 }
