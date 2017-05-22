@@ -8,12 +8,12 @@ import { createHashHistory } from 'react-router/node_modules/history'
 import rootReducer from './reducers/index';
 
 // import default data
-import notes from './data/notes';
+import data from './data/data';
 
 
 // create an object for the default data
 const defaultState = {
-  notes
+  data
 };
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });

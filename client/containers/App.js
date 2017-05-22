@@ -6,7 +6,7 @@ import * as actionCreators from '../actions/actionCreators'; // import all '*'
 import Main from './Main';
 
 const mapStateToProps = (state) => ({
-	notes: state.notes
+	data: state.data
 })
 
 const mapDispatchToProps = (dispatch) => {

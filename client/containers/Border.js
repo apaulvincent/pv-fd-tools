@@ -51,7 +51,6 @@ class Border extends Component {
 		const {width, 
 			   borderRadius,
 			   borderColor,
-			   borderStyle,
 			   borderWidth} = this.props
 
 
@@ -94,12 +93,12 @@ class Border extends Component {
 					}
 					<hr className="pv-spacer"/>
 					<label>Style <strong>{}</strong></label>
-					<DropDown value={borderStyle} onChange={this.updateBorderStyle}>
-						<Option value={'solid'}>solid<span></span></Option>
-						<Option value={'dotted'}>dotted<span></span></Option>
-						<Option value={'dashed'}>dashed<span></span></Option>
-						<Option value={'double'}>double<span></span></Option>
-						<Option value={'none'}>none<span></span></Option>
+					<DropDown onChange={this.updateBorderStyle}>
+						<Option value={'solid'}>Solid<span></span></Option>
+						<Option value={'dotted'}>Dotted<span></span></Option>
+						<Option value={'dashed'}>Dashed<span></span></Option>
+						<Option value={'double'}>Double<span></span></Option>
+						<Option value={'none'}>None<span></span></Option>
 					</DropDown>
 				</div>
 			</div>

@@ -7,7 +7,8 @@ class DropDown extends Component{
         
         this.state= {
             open: false,
-            value: ''
+            value: '',
+            text: 'Select'
         }
     }
 
@@ -19,25 +20,25 @@ class DropDown extends Component{
         }
     }
 
-
-    handleSelect = (val) => {
+    handleSelect = (val, text) => {
 
         this.props.onChange(val)
 
         this.setState({
-            value: val
+            value: val,
+            text: text
         })
     }
 
-
     render() {
-        const {value} = this.props
+        const {defaultValue} = this.props
         const classNames = ['pv-dropdown', (this.state.open ? ' open' : ''), (this.props.enabled ? '' : ' disabled')].join('');
+        const defaultSelected = (defaultValue) ? defaultValue : this.state.value
 
         return(
             <div className="pv-dropdown-wrap">
                 <div className={classNames} onClick={this.handleOpen}>
-                    <div className="pv-dd-field">{value}</div>
+                    <div className="pv-dd-field">{(defaultValue) ? defaultValue : this.state.text}</div>
                     <div className="pv-dd-options">
                         { 
                             React.Children.map(this.props.children, (child => {
@@ -45,7 +46,7 @@ class DropDown extends Component{
                                     value: child.props.value,
                                     text: child.props.children,
                                     onSelect: this.handleSelect,
-                                    selected: this.props.value
+                                    selected: defaultSelected
                                 })
                             })) 
                         }
@@ -73,7 +74,7 @@ DropDown.propTypes = {
 export class Option extends Component {
     
     handleSelect = () => {
-        this.props.onSelect(this.props.value)
+        this.props.onSelect(this.props.value, this.props.text)
     }
 
     render(){

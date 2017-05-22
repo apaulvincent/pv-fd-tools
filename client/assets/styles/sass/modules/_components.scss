@@ -143,14 +143,26 @@
 	margin: 10px 0;
 }
 
+.pv-dd-field {
+	// text-transform: capitalize;
+	padding: 5px 10px;
+}
 
 .pv-dropdown {
+	position: relative;
 	border: 1px solid #ccc;
 	background: #fff;
 	cursor: pointer;
-
+	
 	.pv-dd-options {
+		width: 100%;
 		display: none;
+		background: #fff;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		border: 1px solid #ccc;
 	}
 
 	&.open {
@@ -160,7 +172,7 @@
 	}
 
 	.list-item {
-		// cursor: pointer;
+		padding: 0 10px;
 	}
 
 	.selected {

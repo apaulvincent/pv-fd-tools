@@ -5,6 +5,7 @@ label {
 	@extend %clearfix;
 
 	strong {
+		text-transform: uppercase;
 		font-weight: normal;
 		float: right;
 		color: #999;

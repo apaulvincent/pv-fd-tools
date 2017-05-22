@@ -13,7 +13,8 @@ class Main extends Component {
 			boxStyles: {
 				width: 300,
 				height: 200,
-				backgroundColor: {r: 248, g: 248, b: 248, a: 1},
+				foregroundColor: '#ffffff',
+				backgroundColor: '#fafafa',
 				borderWidth: 0,
 				borderColor: '#000000',
 				borderStyle: 'solid',
@@ -50,15 +51,15 @@ class Main extends Component {
 	
 	render(){
 
+		const formatWrapperBoxStyles = {
+			backgroundColor: this.state.boxStyles.backgroundColor			
+		}
 		const formatBoxStyles = {
 			width: `${this.state.boxStyles.width}px`,
 			height: `${this.state.boxStyles.height}px`,
 			border: `${this.state.boxStyles.borderWidth}px ${this.state.boxStyles.borderStyle} ${this.state.boxStyles.borderColor}`,
 			borderRadius: `${this.state.boxStyles.borderRadius}px`,
-			backgroundColor: `rgba(${this.state.boxStyles.backgroundColor.r},
-							       ${this.state.boxStyles.backgroundColor.g},
-							       ${this.state.boxStyles.backgroundColor.b},
-							       ${this.state.boxStyles.backgroundColor.a})`,
+			backgroundColor: this.state.boxStyles.foregroundColor,
 			boxShadow: `${this.state.boxStyles.boxShadowInset ? 'inset' : ''} 
 						${this.state.boxStyles.boxShadowHorizontal}px 
 						${this.state.boxStyles.boxShadowVertical}px 
@@ -83,10 +84,12 @@ class Main extends Component {
 			`${this.state.boxStyles.boxShadowSpread}px`,  
 			`rgba(${this.state.boxStyles.boxShadowColor.r}, ${this.state.boxStyles.boxShadowColor.g}, ${this.state.boxStyles.boxShadowColor.b}, ${this.state.boxStyles.boxShadowOpacity});`];
 
-const boxText =
-`width: ${this.state.boxStyles.width}px;
+const boxText =`/* DIMENSION */
+width: ${this.state.boxStyles.width}px;
 height: ${this.state.boxStyles.height}px;
+/* BOXSHADOW */
 ${this.prefixer(boxShadowPrefix, boxShadowValues)}
+/* BORDER */
 `;
 		
 		return(
@@ -95,10 +98,10 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 				{React.cloneElement(this.props.children, {
 						width: this.state.boxStyles.width,
 						height: this.state.boxStyles.height,
+						foregroundColor: this.state.boxStyles.foregroundColor,
 						backgroundColor: this.state.boxStyles.backgroundColor,
 						borderWidth: this.state.boxStyles.borderWidth,
 						borderColor: this.state.boxStyles.borderColor,
-						borderStyle: this.state.boxStyles.borderStyle,
 						borderRadius: this.state.boxStyles.borderRadius,
 						boxShadowHorizontal: this.state.boxStyles.boxShadowHorizontal,
 						boxShadowVertical: this.state.boxStyles.boxShadowVertical,
@@ -109,7 +112,7 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 						boxShadowInset: this.state.boxStyles.boxShadowInset,
 						updateStyles : this.updateStyles
 						})}
-				<BoxModel styles={formatBoxStyles} />
+				<BoxModel styles={formatBoxStyles} wrapStyles={formatWrapperBoxStyles} />
 				<Output text={boxText} />
 			</div>
 		)

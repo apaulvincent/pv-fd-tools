@@ -12,13 +12,9 @@ class Home extends Component {
 	constructor(props, context) {
 		super(props, context)
 		this.state = {
-			color: {
-				r: '0',
-				g: '0',
-				b: '0',
-				a: '1',
-			},
+			color: '#fafafa',
 			showColorPicker: false,
+			colorPickerId: null
 		}
 	}
 
@@ -31,13 +27,17 @@ class Home extends Component {
 	}
 
 	updateBackgroundColor = (color) => {
-		this.props.updateStyles('backgroundColor', color.rgb)
+		this.props.updateStyles('backgroundColor', color.hex)
 	}
 
+	updateForegroundColor = (color) => {
+		this.props.updateStyles('foregroundColor', color.hex)
+	}
 
-	showColorPicker = () => {
+	showColorPicker = (e) => {
 		this.setState({
-			showColorPicker: !this.state.showColorPicker
+			showColorPicker: !this.state.showColorPicker,
+			colorPickerId: e.currentTarget.id
 		})
 	}
 
@@ -49,10 +49,14 @@ class Home extends Component {
 
 	render(){
 
-		const {width, height, backgroundColor} = this.props
+		const {width, height, backgroundColor, foregroundColor} = this.props
 
-		const btnStyle = {
-			background: `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, 1)`
+		const btnStyleFG = {
+			background: foregroundColor
+		}
+
+		const btnStyleBG = {
+			background: backgroundColor
 		}
 
 		return(
@@ -77,10 +81,24 @@ class Home extends Component {
 						onChange={this.updateHeight}
 						/>
 					<hr className="pv-spacer"/>
-					<label>Background <strong>{`R: ${backgroundColor.r} G: ${backgroundColor.g} B: ${backgroundColor.b}`}</strong></label>
-					<button onClick={this.showColorPicker} className="color-picker-btn"><span style={btnStyle}></span></button>
+					<label>Foreground <strong>{`HEX: ${foregroundColor}`}</strong></label>
+					<button onClick={this.showColorPicker} id="btn1" className="color-picker-btn"><span style={btnStyleFG}></span></button>
 					{
-						this.state.showColorPicker ? 
+						(this.state.showColorPicker && this.state.colorPickerId == 'btn1') ? 
+						<div className="color-picker-popover">
+							<div className="color-picker-cover" onClick={this.hideColorPicker}></div>
+							<SketchPicker 
+								color={foregroundColor}
+								disableAlpha={true}
+								presetColors={[]}
+								onChange={this.updateForegroundColor}/>
+						</div> : null
+					}
+					<hr className="pv-spacer"/>
+					<label>Background <strong>{`HEX: ${backgroundColor}`}</strong></label>
+					<button onClick={this.showColorPicker} id="btn2" className="color-picker-btn"><span style={btnStyleBG}></span></button>
+					{
+						(this.state.showColorPicker && this.state.colorPickerId == 'btn2') ? 
 						<div className="color-picker-popover">
 							<div className="color-picker-cover" onClick={this.hideColorPicker}></div>
 							<SketchPicker 
