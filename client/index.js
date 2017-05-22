@@ -12,7 +12,7 @@ import Err404 from './containers/404'
 
 import Home from './containers/Home'
 import BoxShadow from './containers/BoxShadow'
-import BorderRadius from './containers/BorderRadius'
+import Border from './containers/Border'
 
 // import react router deps
 import { Router, Route, IndexRoute } from 'react-router';
@@ -29,7 +29,7 @@ const router = (
       <Route exact path="/" component={App}>
         <IndexRoute component={Home}></IndexRoute>
         <Route path="/box-shadow" component={BoxShadow}/>
-        <Route path="/border-radius" component={BorderRadius}/>
+        <Route path="/border-radius" component={Border}/>
       </Route>
       
       <Route path="*" component={Err404} />

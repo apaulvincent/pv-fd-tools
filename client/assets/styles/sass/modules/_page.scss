@@ -63,9 +63,6 @@ body, html, #root {
     .inner {
         padding: 20px;
     }
-
-    
-
 }
 
 
@@ -82,9 +79,26 @@ body, html, #root {
 
 .box-model {
     margin: 60px auto;
-    padding: 20px;
+    box-sizing: initial;
+}
+
+
+.box-output-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 240px;
+    margin-left: 330px;
+    min-width: 400px;
     text-align: left;
-    
+    overflow: auto;
+    border-top: 1px dashed #ccc;
+
+    div {
+        padding: 30px 20px;
+    }
+
     pre {
         margin: 0;
         padding: 0;

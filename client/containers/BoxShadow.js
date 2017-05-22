@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Slider from 'react-rangeslider'
 import '../assets/styles/components/range.scss'
 import { SketchPicker } from 'react-color';
+import Toggle from '../components/Toggle';
 
 
 class BoxShadow extends Component {
@@ -58,6 +59,10 @@ class BoxShadow extends Component {
 		})
 	}
 
+	toggleShadowInset = (bool) => {
+		this.props.updateStyles('boxShadowInset', bool)
+	}
+
 	render(){
 
 		const {boxShadowHorizontal, 
@@ -65,7 +70,8 @@ class BoxShadow extends Component {
 			   boxShadowBlur,
 			   boxShadowColor,
 			   boxShadowOpacity,
-			   boxShadowSpread} = this.props
+			   boxShadowSpread,
+			   boxShadowInset} = this.props
 
 		const btnStyle = {
 			background: `rgba(${boxShadowColor.r}, ${boxShadowColor.g}, ${boxShadowColor.b}, 1)`
@@ -134,6 +140,9 @@ class BoxShadow extends Component {
 						tooltip={false}
 						onChange={this.updateOpacity}
 						/>
+					<hr className="pv-spacer"/>
+					<label>Inset</label>
+					<Toggle on={boxShadowInset} onToggle={this.toggleShadowInset} />
 				</div>
 			</div>
 		)

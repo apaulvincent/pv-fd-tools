@@ -35,9 +35,9 @@ select {
 	//@include round-corners(3px);
 	@include transition(0.4s all ease);
 
-	&:focus {
+	// &:focus {
 	
-	}
+	// }
 
 	&.error {
 		border: 1px solid #ff0204;

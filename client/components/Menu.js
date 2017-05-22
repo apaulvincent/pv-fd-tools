@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 
 
 // Icons
-import HomeIcon from 'react-icons/lib/fa/home'
-import NoteIcon from 'react-icons/lib/fa/file-text-o'
-import LogoutIcon from 'react-icons/lib/fa/sign-out'
+import HomeIcon from 'react-icons/lib/fa/arrows'
+import Square from 'react-icons/lib/fa/square-o'
+import Clone from 'react-icons/lib/fa/clone'
 import TagIcon from 'react-icons/lib/go/tag'
 
 class Menu extends Component {
@@ -14,8 +14,8 @@ class Menu extends Component {
 		return(
 			<nav className="main-menu">
 				<Link to="/" onlyActiveOnIndex activeClassName="selected"><HomeIcon/></Link>
-				<Link to="/box-shadow" activeClassName="selected"><NoteIcon/></Link>
-				<Link to="/border-radius" activeClassName="selected"><NoteIcon/></Link>
+				<Link to="/box-shadow" activeClassName="selected"><Clone/></Link>
+				<Link to="/border-radius" activeClassName="selected"><Square/></Link>
 			</nav>
 		)
 	}

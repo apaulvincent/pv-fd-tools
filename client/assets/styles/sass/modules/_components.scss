@@ -95,3 +95,76 @@
     }
   }
 }
+
+
+
+
+// Toggle Component
+.toggle-wrap {
+	height: 26px;
+	margin: 10px 0;
+}
+
+.toggle-track {
+	cursor: pointer;
+	position: relative;
+	display: inline-block;
+	height: 6px;
+	width: 48px;
+	background: #ccc;
+
+	&.on {
+		background: $c_c_1;
+
+		.toggle-pin {
+			@include transform(translateX(100%));
+		}
+	}
+}
+
+.toggle-pin {
+	cursor: pointer;
+	position: absolute;
+	top: -10px;
+	left: 0;
+	width: 26px;
+	height: 26px;
+	border: 1px solid #ccc;
+	background: #fff;
+
+	@include round-corners(32px);
+	@include transition(0.2s all ease);
+}
+
+
+// Dropdown Component
+
+.pv-dropdown-wrap {
+	margin: 10px 0;
+}
+
+
+.pv-dropdown {
+	border: 1px solid #ccc;
+	background: #fff;
+	cursor: pointer;
+
+	.pv-dd-options {
+		display: none;
+	}
+
+	&.open {
+		.pv-dd-options {
+			display: block;
+		}
+	}
+
+	.list-item {
+		// cursor: pointer;
+	}
+
+	.selected {
+		color: #fff;
+		background: $c_c_1;
+	}
+}
