@@ -20,9 +20,7 @@ class Toggle extends Component{
                 on: !this.state.on
             })
         }
-
     }
-
 
     render() {
 

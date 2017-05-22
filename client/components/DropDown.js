@@ -31,7 +31,7 @@ class DropDown extends Component{
     }
 
     render() {
-        const {defaultValue} = this.props
+        const {children, defaultValue} = this.props
         const classNames = ['pv-dropdown', (this.state.open ? ' open' : ''), (this.props.enabled ? '' : ' disabled')].join('');
         const defaultSelected = (defaultValue) ? defaultValue : this.state.value
 
@@ -41,7 +41,7 @@ class DropDown extends Component{
                     <div className="pv-dd-field">{(defaultValue) ? defaultValue : this.state.text}</div>
                     <div className="pv-dd-options">
                         { 
-                            React.Children.map(this.props.children, (child => {
+                            React.Children.map(children, (child => {
                                 return React.cloneElement(child, {
                                     value: child.props.value,
                                     text: child.props.children,

@@ -13,8 +13,8 @@ class Main extends Component {
 			boxStyles: {
 				width: 300,
 				height: 200,
-				foregroundColor: '#ffffff',
-				backgroundColor: '#fafafa',
+				foregroundColor: '#FFFFFF',
+				backgroundColor: '#E9E9E9',
 				borderWidth: 0,
 				borderColor: '#000000',
 				borderStyle: 'solid',
@@ -100,6 +100,7 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 						height: this.state.boxStyles.height,
 						foregroundColor: this.state.boxStyles.foregroundColor,
 						backgroundColor: this.state.boxStyles.backgroundColor,
+						borderStyle: this.state.boxStyles.borderStyle,
 						borderWidth: this.state.boxStyles.borderWidth,
 						borderColor: this.state.boxStyles.borderColor,
 						borderRadius: this.state.boxStyles.borderRadius,

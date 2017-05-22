@@ -37,7 +37,7 @@ class Home extends Component {
 	showColorPicker = (e) => {
 		this.setState({
 			showColorPicker: !this.state.showColorPicker,
-			colorPickerId: e.currentTarget.id
+			colorPickerId: e.currentTarget.getAttribute('data-id')
 		})
 	}
 
@@ -82,9 +82,9 @@ class Home extends Component {
 						/>
 					<hr className="pv-spacer"/>
 					<label>Foreground <strong>{`HEX: ${foregroundColor}`}</strong></label>
-					<button onClick={this.showColorPicker} id="btn1" className="color-picker-btn"><span style={btnStyleFG}></span></button>
+					<button onClick={this.showColorPicker} data-id={1} className="color-picker-btn"><span style={btnStyleFG}></span></button>
 					{
-						(this.state.showColorPicker && this.state.colorPickerId == 'btn1') ? 
+						(this.state.showColorPicker && this.state.colorPickerId == 1) ? 
 						<div className="color-picker-popover">
 							<div className="color-picker-cover" onClick={this.hideColorPicker}></div>
 							<SketchPicker 
@@ -96,9 +96,9 @@ class Home extends Component {
 					}
 					<hr className="pv-spacer"/>
 					<label>Background <strong>{`HEX: ${backgroundColor}`}</strong></label>
-					<button onClick={this.showColorPicker} id="btn2" className="color-picker-btn"><span style={btnStyleBG}></span></button>
+					<button onClick={this.showColorPicker} data-id={2} className="color-picker-btn"><span style={btnStyleBG}></span></button>
 					{
-						(this.state.showColorPicker && this.state.colorPickerId == 'btn2') ? 
+						(this.state.showColorPicker && this.state.colorPickerId == 2) ? 
 						<div className="color-picker-popover">
 							<div className="color-picker-cover" onClick={this.hideColorPicker}></div>
 							<SketchPicker 
