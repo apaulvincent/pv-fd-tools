@@ -28,7 +28,7 @@ module.exports = {
   output: {
     path: PATHS.build,
     filename: PROD ? 'bundle.min.js' : 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
 	devServer: {
 		inline: true,

@@ -5,6 +5,9 @@ import Menu from '../components/Menu'
 import {BoxModel} from '../components/BoxModel'
 import {Output} from '../components/Output'
 
+
+import {hexToRgb} from '../utils/utility';
+
 class Main extends Component {
 	constructor(props){
 		super(props);
@@ -25,7 +28,20 @@ class Main extends Component {
 				boxShadowSpread: 0,
 				boxShadowColor: {r: 0, g: 0, b: 0, a: 1},
 				boxShadowOpacity: 0.1,
-				boxShadowInset: false
+				boxShadowInset: false,
+				enableGradient: false,
+				gradientStyle: {
+					opacityMarkers: [
+						{id: 1, position: 0, opacity: 1},
+						{id: 2, position: 100, opacity: 1}
+					],
+					colorMarkers: [
+						{id: 1, position: 0, color: '#f0483f'},
+						{id: 2, position: 100, color: '#837ced'}
+					],
+					selectedColorMarkerId: 1,
+					selectedColorHex: '#f0483f'
+				}
 			}
 		}
 	}
@@ -54,6 +70,16 @@ class Main extends Component {
 		const formatWrapperBoxStyles = {
 			backgroundColor: this.state.boxStyles.backgroundColor			
 		}
+
+		let bgImageStr = 'linear-gradient(to right,';
+		const sortColors = this.state.boxStyles.gradientStyle['colorMarkers'].sort((a, b) => a.position - b.position);
+
+		for (var i = 0; i < sortColors.length; i++) {
+			bgImageStr += `${(i == 0) ? '':','} rgb(${hexToRgb(sortColors[i].color)}) ${sortColors[i].position}%`;
+		}
+
+
+
 		const formatBoxStyles = {
 			width: `${this.state.boxStyles.width}px`,
 			height: `${this.state.boxStyles.height}px`,
@@ -69,6 +95,7 @@ class Main extends Component {
 							${this.state.boxStyles.boxShadowColor.g},
 							${this.state.boxStyles.boxShadowColor.b},
 							${this.state.boxStyles.boxShadowOpacity})`,
+			backgroundImage : (this.state.boxStyles.enableGradient ?  bgImageStr : 'none')
 		}
 
 		const boxShadowPrefix = [
@@ -111,7 +138,13 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 						boxShadowColor: this.state.boxStyles.boxShadowColor,
 						boxShadowOpacity: this.state.boxStyles.boxShadowOpacity,
 						boxShadowInset: this.state.boxStyles.boxShadowInset,
-						updateStyles : this.updateStyles
+						enableGradient: this.state.boxStyles.enableGradient,
+						gradientStyle: this.state.boxStyles.gradientStyle,
+						opacityMarkers: this.state.boxStyles.gradientStyle.opacityMarkers,
+						colorMarkers: this.state.boxStyles.gradientStyle.colorMarkers,
+						selectedColorMarkerId: this.state.boxStyles.gradientStyle.selectedColorMarkerId,
+						selectedColorHex: this.state.boxStyles.gradientStyle.selectedColorHex,
+						updateStyles : this.updateStyles,
 						})}
 				<BoxModel styles={formatBoxStyles} wrapStyles={formatWrapperBoxStyles} />
 				<Output text={boxText} />

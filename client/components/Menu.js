@@ -6,7 +6,8 @@ import { Link } from 'react-router'
 import HomeIcon from 'react-icons/lib/fa/arrows'
 import Square from 'react-icons/lib/fa/square-o'
 import Clone from 'react-icons/lib/fa/clone'
-import TagIcon from 'react-icons/lib/go/tag'
+import Anim from 'react-icons/lib/fa/circle-thin'
+import Gradie from 'react-icons/lib/fa/minus-square-o'
 
 class Menu extends Component {
 
@@ -16,6 +17,8 @@ class Menu extends Component {
 				<Link to="/" onlyActiveOnIndex activeClassName="selected"><HomeIcon/></Link>
 				<Link to="/box-shadow" activeClassName="selected"><Clone/></Link>
 				<Link to="/border-radius" activeClassName="selected"><Square/></Link>
+				<Link to="/gradient" activeClassName="selected"><Gradie/></Link>
+				<Link to="/animation" activeClassName="selected"><Anim/></Link>
 			</nav>
 		)
 	}

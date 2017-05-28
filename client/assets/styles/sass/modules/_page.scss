@@ -53,6 +53,8 @@ body, html, #root {
 }
 
 .drawer-tool-bar {
+    position: relative;
+    z-index: 1;
     height: 100%;
     width: 260px;
     float: left;

@@ -180,3 +180,93 @@
 		background: $c_c_1;
 	}
 }
+
+
+
+
+//  Gradient Editor Component
+
+.gradient-wrap {
+	position: relative;
+}
+
+.gradient-panel {
+
+}
+
+.gradient-holder {
+	margin: 0 5px;
+	height: 40px;
+	background: lightseagreen;
+}
+
+.marker-track {
+	position: relative;
+	height: 15px;
+	margin-right: 10px;
+	
+	.marker {
+		width: 10px;
+		height: 12px;
+		position: absolute;
+		background: #333;
+		left: 0;
+		cursor: pointer;
+	}
+
+	.marker.selected {
+		// border: 1px dotted #000;
+	}
+
+	.color-handler {
+		width: 10px;
+		height: 12px;
+	}
+
+}
+
+.marker-opacity-wrap {
+	display: none; // hidden for the mean time
+
+	.marker {
+		bottom: 5px;
+	}
+
+	.tip {
+		top: 100%;
+		left: 50%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-color: rgba(0, 0, 0, 0);
+		border-top-color:#000;
+		border-width: 5px;
+		margin-left: -5px;
+	}
+
+}
+
+.marker-color-wrap {
+
+	.marker {
+		top: 5px;
+	}
+
+	.tip {
+		bottom: 100%;
+		left: 50%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-color: rgba(0, 0, 0, 0);
+		border-bottom-color:#000;
+		border-width: 5px;
+		margin-left: -5px;
+	}
+}
