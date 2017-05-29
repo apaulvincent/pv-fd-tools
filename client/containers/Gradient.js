@@ -157,6 +157,27 @@ class Gradient extends Component {
 }
 export default Gradient;
 
+Gradient.defaultProps = {
+	opacityMarkers: [
+		{id: 1, position: 0, opacity: 1},
+		{id: 2, position: 100, opacity: 1}
+	],
+	colorMarkers: [
+		{id: 1, position: 0, color: '#f0483f'},
+		{id: 2, position: 100, color: '#837ced'}
+	],
+	selectedColorMarkerId: 1,
+	selectedColorHex: '#f0483f'
+}
+
+Gradient.propTypes = {
+	opacityMarkers: PropTypes.array.isRequired,
+	colorMarkers: PropTypes.array.isRequired,
+	selectedColorMarkerId: PropTypes.number.isRequired,
+	selectedColorHex: PropTypes.string.isRequired
+}
+
+
 
 class ColorMarker extends Component {
 	constructor(props){
@@ -164,17 +185,22 @@ class ColorMarker extends Component {
 
 		this.state = {
 			open: false
-		}		
+		}
+
+		this.mouseUpTime = 0;
+		this.mouseDownTime = 0;
 	}
-	
+
 
 	onMouseDown = (e) => {
+		this.mouseDownTime = e.nativeEvent.timeStamp
 		document.addEventListener('mousemove', this.onMouseMove);
 		document.addEventListener('mouseup', this.onMouseUp);
 		e.preventDefault();
 	}
 
 	onMouseUp = (e) => {
+		this.mouseUpTime = e.timeStamp
 		document.removeEventListener('mousemove', this.onMouseMove);
 		document.removeEventListener('mouseup', this.onMouseUp);
 		e.preventDefault();	
@@ -186,10 +212,12 @@ class ColorMarker extends Component {
 	}
 
 	handleClick = (e) => {
-
-		this.setState({
-			open: !this.state.open
-		})
+		// If difference of timeStamps is less event should be Click
+		if((this.mouseUpTime - this.mouseDownTime) <= 200){
+			this.setState({
+				open: !this.state.open
+			})
+		}
 
 		this.props.onColorMarkerSelect(this.props.guid, this.props.color)
 
