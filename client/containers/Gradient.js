@@ -35,6 +35,16 @@ class Gradient extends Component {
 		}
 	}
 
+	handleColorDelete = (id) => {
+		if( this.props.colorMarkers.length > 2 ) {
+			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
+					colorMarkers: this.props.colorMarkers.filter( o => {
+							return o.id !== id  
+						})
+				}))
+		}
+	}
+
 	handleColorDrag = (id, pos) => {
 
 		const markerWidth = 10;
@@ -138,6 +148,7 @@ class Gradient extends Component {
 								colorMarkers.map((o, i) => {
 									return <ColorMarker
 												onMove={this.handleColorDrag} 
+												onDelete={this.handleColorDelete} 
 												onColorChange={this.handleColorChange}
 												onColorMarkerSelect={this.handleColorMarkerSelect}
 												position={o.position} 
@@ -189,11 +200,14 @@ class ColorMarker extends Component {
 
 		this.mouseUpTime = 0;
 		this.mouseDownTime = 0;
+
+		this.mouseMoveY = 0;
 	}
 
 
 	onMouseDown = (e) => {
 		this.mouseDownTime = e.nativeEvent.timeStamp
+		this.mouseMoveY = e.nativeEvent.y
 		document.addEventListener('mousemove', this.onMouseMove);
 		document.addEventListener('mouseup', this.onMouseUp);
 		e.preventDefault();
@@ -207,7 +221,13 @@ class ColorMarker extends Component {
 	}
 
 	onMouseMove = (e) => {
+
 		this.props.onMove(this.props.guid, e.x)
+
+		if( Math.abs(this.mouseMoveY - e.y) > 40 ) {
+			this.props.onDelete(this.props.guid)
+		}
+
 		e.preventDefault();
 	}
 
@@ -273,11 +293,13 @@ class ColorMarker extends Component {
 
 ColorMarker.defaultProps = {
 	onMove:  f => f,
+	onDelete: f=> f,
 	onColorChange: f => f
 }
 
 ColorMarker.propTypes = {
 	onMove: PropTypes.func,
+	onDelete: PropTypes.func,
 	onColorChange: PropTypes.func
 }
 
