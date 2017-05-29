@@ -200,10 +200,8 @@ class ColorMarker extends Component {
 
 		this.mouseUpTime = 0;
 		this.mouseDownTime = 0;
-
 		this.mouseMoveY = 0;
 	}
-
 
 	onMouseDown = (e) => {
 		this.mouseDownTime = e.nativeEvent.timeStamp
@@ -232,6 +230,7 @@ class ColorMarker extends Component {
 	}
 
 	handleClick = (e) => {
+		
 		// If difference of timeStamps is less event should be Click
 		if((this.mouseUpTime - this.mouseDownTime) <= 200){
 			this.setState({
