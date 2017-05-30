@@ -5,7 +5,6 @@ import Menu from '../components/Menu'
 import {BoxModel} from '../components/BoxModel'
 import {Output} from '../components/Output'
 
-
 import {hexToRgb} from '../utils/utility';
 
 class Main extends Component {
@@ -38,9 +37,7 @@ class Main extends Component {
 					colorMarkers: [
 						{id: 1, position: 0, color: '#f0483f'},
 						{id: 2, position: 100, color: '#837ced'}
-					],
-					selectedColorMarkerId: 1,
-					selectedColorHex: '#f0483f'
+					]
 				}
 			}
 		}
@@ -72,13 +69,12 @@ class Main extends Component {
 		}
 
 		let bgImageStr = 'linear-gradient(to right,';
+
 		const sortColors = this.state.boxStyles.gradientStyle['colorMarkers'].sort((a, b) => a.position - b.position);
 
 		for (var i = 0; i < sortColors.length; i++) {
 			bgImageStr += `${(i == 0) ? '':','} rgb(${hexToRgb(sortColors[i].color)}) ${sortColors[i].position}%`;
 		}
-
-
 
 		const formatBoxStyles = {
 			width: `${this.state.boxStyles.width}px`,

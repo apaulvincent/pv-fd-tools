@@ -37,7 +37,14 @@ button, a, img {
 
 .color-picker-popover {
 	position: absolute;
+	min-width: 100px;
 	z-index: 2;
+
+	.sketch-picker {
+		position: relative;
+		z-index: 1;
+	}
+
 }
 
 .color-picker-cover {
@@ -46,6 +53,7 @@ button, a, img {
 	right: 0px;
 	bottom: 0px;
 	left: 0px;
+	background: rgba(0,0,0,0.2);
 }
 
 .color-picker-btn {

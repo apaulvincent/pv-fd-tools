@@ -16,6 +16,27 @@ class Gradient extends Component {
 		this.state = {}
 	}
 
+	// Opacity Markers
+
+	handleOpacityDelete = (id) => {
+		if( this.props.opacityMarkers.length > 2 ) {
+			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
+					opacityMarkers: this.props.opacityMarkers.filter( o => {
+							return o.id !== id  
+						})
+				}))
+		}
+	}
+
+	handleOpacityChange = (id, val) => {
+		this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
+				opacityMarkers: this.props.opacityMarkers.map( o => {
+					if(o.id == id) return Object.assign({}, o, {opacity: val})
+						return o
+					})
+			}))
+	}
+
 	handleOpacityDrag = (id, pos) => {
 
 		const markerWidth = 10;
@@ -34,6 +55,24 @@ class Gradient extends Component {
 
 		}
 	}
+
+	handleOpacityTrackClick = (e) => {
+
+		const gradientWrapRect = this.refs.gradientWrap.getBoundingClientRect();
+		const newPos = e.pageX - gradientWrapRect.left;
+		const percent = newPos/gradientWrapRect.width * 100;
+		const newId = new Date().valueOf();
+
+		if(( e.target.className.indexOf('marker-opacity-wrap') !== -1 )){
+
+			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
+				opacityMarkers: [...this.props.opacityMarkers, 
+					{id: newId, position: percent, opacity: 1}]
+			}))
+		}
+	}
+
+	// Color Markers
 
 	handleColorDelete = (id) => {
 		if( this.props.colorMarkers.length > 2 ) {
@@ -73,6 +112,7 @@ class Gradient extends Component {
 			}))
 	}
 
+
 	handleColorMarkerSelect = (id, color) => {
 		this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
 				selectedColorMarkerId: id,
@@ -95,6 +135,8 @@ class Gradient extends Component {
 			}))
 		}
 	}
+	
+
 
 	enableGradientToggle = (e) => {
 		this.props.updateStyles('enableGradient', !this.props.enableGradient)
@@ -128,11 +170,13 @@ class Gradient extends Component {
 					<Toggle on={enableGradient} onToggle={this.enableGradientToggle} />
 					<hr className="pv-spacer"/>
 					<div className="gradient-wrap">
-						<div className="marker-track marker-opacity-wrap">
+						<div onClickCapture={this.handleOpacityTrackClick} className="marker-track marker-opacity-wrap">
 							{
 								opacityMarkers.map((o, i) => {
 									return <OpacityMarker 
 												onMove={this.handleOpacityDrag}
+												onDelete={this.handleOpacityDelete} 
+												onOpacityChange={this.handleOpacityChange}
 												position={o.position}
 												opacity={o.opacity}
 												guid={o.id}
@@ -143,7 +187,7 @@ class Gradient extends Component {
 						<div className="gradient-panel" ref="gradientWrap">
 							<div className="gradient-holder" style={gradientStyle}></div>
 						</div>
-						<div ref="colorTrack" onClickCapture={this.handleColorTrackClick} className="marker-track marker-color-wrap">
+						<div onClickCapture={this.handleColorTrackClick} className="marker-track marker-color-wrap">
 							{
 								colorMarkers.map((o, i) => {
 									return <ColorMarker
@@ -307,54 +351,111 @@ class OpacityMarker extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			opacity: 1,
-			position: 0
-		}		
+			open: false
+		}
+
+		this.mouseUpTime = 0;
+		this.mouseDownTime = 0;
+		this.mouseMoveY = 0;	
 	}
 
 	onMouseDown = (e) => {
+		this.mouseDownTime = e.nativeEvent.timeStamp
+		this.mouseMoveY = e.nativeEvent.y
 		document.addEventListener('mousemove', this.onMouseMove);
 		document.addEventListener('mouseup', this.onMouseUp);
 		e.preventDefault();
 	}
 
 	onMouseUp = (e) => {
+		this.mouseUpTime = e.timeStamp
 		document.removeEventListener('mousemove', this.onMouseMove);
 		document.removeEventListener('mouseup', this.onMouseUp);
-		e.preventDefault();
+		e.preventDefault();	
 	}
 
 	onMouseMove = (e) => {
-		this.props.onMove(this.props.guid, e.x) 		
+
+		this.props.onMove(this.props.guid, e.x)
+
+		if( Math.abs(this.mouseMoveY - e.y) > 40 ) {
+			this.props.onDelete(this.props.guid)
+		}
+
 		e.preventDefault();
 	}
+
+	handleClick = (e) => {
+		
+		// If difference of timeStamps is less event should be Click
+		if((this.mouseUpTime - this.mouseDownTime) <= 200){
+			this.setState({
+				open: !this.state.open
+			})
+		}
+
+		//this.props.onColorMarkerSelect(this.props.guid, this.props.color)
+
+		e.preventDefault();
+	}
+
+	handleClose = (e) => {
+		this.setState({
+			open: false
+		})
+
+		e.preventDefault();
+	}
+
+	updateOpacity = (val) => {
+		this.props.onOpacityChange(this.props.guid, val)
+	}
+
 
 	render() {
 
 		const style = {
-			opacity: this.props.opacity,
 			left:  `${this.props.position}%`
 		}
 
 		const tipStyle = {
-			borderBottomColor: this.props.opacity,
+			opacity: this.props.opacity,
 		}
 
 		const classes = ['marker', (this.props.selected ? ' selected': '')].join('')
 
-
 		return(
 			<div className={classes} style={style} onMouseDown={this.onMouseDown}>
 				<span className="tip" style={tipStyle}></span>
+				<div className="opacity-handler" style={tipStyle} onMouseDown={this.onMouseDown} onClick={this.handleClick}></div>
+
+				{
+					(this.state.open) ? 
+					<div className="color-picker-popover">
+					<div className="color-picker-cover" onClick={this.handleClose}></div>
+						<Slider 
+						value={this.props.opacity}
+						max={1}
+						min={0}
+						step={0.05}
+						tooltip={false}
+						onChange={this.updateOpacity} />
+					</div> : null 
+				}
+
 			</div>
 		)
 	}
 }
 
 OpacityMarker.defaultProps = {
-	onMove:  f => f
+	onMove:  f => f,
+	onDelete: f=> f,
+	onOpacityChange: f => f
 }
 
 OpacityMarker.propTypes = {
-	onMove: PropTypes.func
+	onMove: PropTypes.func,
+	onDelete: PropTypes.func,
+	onOpacityChange: PropTypes.func
 }

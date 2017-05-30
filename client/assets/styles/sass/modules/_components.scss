@@ -223,13 +223,20 @@
 		height: 12px;
 	}
 
+	.opacity-handler {
+		width: 10px;
+		height: 12px;
+		background: #333;
+	}
+
 }
 
 .marker-opacity-wrap {
-	display: none; // hidden for the mean time
-
+	display: none;
+	
 	.marker {
 		bottom: 5px;
+		background: transparent;
 	}
 
 	.tip {
@@ -242,7 +249,7 @@
 		position: absolute;
 		pointer-events: none;
 		border-color: rgba(0, 0, 0, 0);
-		border-top-color:#000;
+		border-top-color:#333;
 		border-width: 5px;
 		margin-left: -5px;
 	}
