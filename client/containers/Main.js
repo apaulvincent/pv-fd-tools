@@ -36,7 +36,7 @@ class Main extends Component {
 					],
 					colorMarkers: [
 						{id: 1, position: 0, color: '#f0483f'},
-						{id: 2, position: 100, color: '#837ced'}
+						{id: 2, position: 100, color: '#837ced'},
 					]
 				}
 			}

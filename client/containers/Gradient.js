@@ -7,7 +7,7 @@ import '../assets/styles/components/range.scss'
 import { SketchPicker } from 'react-color';
 import Toggle from '../components/Toggle';
 
-import {hexToRgb} from '../utils/utility';
+import {hexToRgb, getColor} from '../utils/utility';
 
 
 class Gradient extends Component {
@@ -124,20 +124,43 @@ class Gradient extends Component {
 
 		const gradientWrapRect = this.refs.gradientWrap.getBoundingClientRect();
 		const newPos = e.pageX - gradientWrapRect.left;
-		const percent = newPos/gradientWrapRect.width * 100;
+		const percent = ( newPos / gradientWrapRect.width ) * 100;
 		const newId = new Date().valueOf();
 
+
+
 		if(( e.target.className.indexOf('marker-color-wrap') !== -1 )){
+				
+			let prev = 0;
+			let next = 100;
+			let prevColor = '';
+			let nextColor = '';
+
+			this.props.colorMarkers.map((m, i) => {
+					
+				if( percent > m.position && m.position >= prev) {
+					prev = m.position
+					prevColor = m.color
+				}
+
+				if( percent < m.position && m.position <= next ) {
+					next = m.position
+					nextColor = m.color
+				}
+
+			})
+
+			const newMarkerPercent = (percent - prev) / (next - prev);
 
 			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
-				colorMarkers: [...this.props.colorMarkers, 
-					{id: newId, position: percent, color: this.props.selectedColorHex}]
+				colorMarkers: [...this.props.colorMarkers, {
+					id: newId, 
+					position: percent, 
+					color: getColor(nextColor, prevColor, newMarkerPercent ) }].sort((a, b) => a.position - b.position)
 			}))
 		}
 	}
 	
-
-
 	enableGradientToggle = (e) => {
 		this.props.updateStyles('enableGradient', !this.props.enableGradient)
 	}
@@ -377,7 +400,7 @@ class OpacityMarker extends Component {
 	onMouseMove = (e) => {
 
 		this.props.onMove(this.props.guid, e.x)
-
+		
 		if( Math.abs(this.mouseMoveY - e.y) > 40 ) {
 			this.props.onDelete(this.props.guid)
 		}
@@ -410,7 +433,6 @@ class OpacityMarker extends Component {
 	updateOpacity = (val) => {
 		this.props.onOpacityChange(this.props.guid, val)
 	}
-
 
 	render() {
 
