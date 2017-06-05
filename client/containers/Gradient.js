@@ -19,9 +19,9 @@ class Gradient extends Component {
 	// Opacity Markers
 
 	handleOpacityDelete = (id) => {
-		if( this.props.opacityMarkers.length > 2 ) {
+		if( this.props.colorMarkers.length > 2 ) {
 			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
-					opacityMarkers: this.props.opacityMarkers.filter( o => {
+					colorMarkers: this.props.colorMarkers.filter( o => {
 							return o.id !== id  
 						})
 				}))
@@ -30,7 +30,7 @@ class Gradient extends Component {
 
 	handleOpacityChange = (id, val) => {
 		this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
-				opacityMarkers: this.props.opacityMarkers.map( o => {
+				colorMarkers: this.props.colorMarkers.map( o => {
 					if(o.id == id) return Object.assign({}, o, {opacity: val})
 						return o
 					})
@@ -47,28 +47,12 @@ class Gradient extends Component {
 		if(percent >= 0 && percent <= 100) {
 
 			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
-				opacityMarkers: this.props.opacityMarkers.map( o => {
+				colorMarkers: this.props.colorMarkers.map( o => {
 					if(o.id == id) return Object.assign({}, o, {position:percent})
 						return o
 					})
 			}))
 
-		}
-	}
-
-	handleOpacityTrackClick = (e) => {
-
-		const gradientWrapRect = this.refs.gradientWrap.getBoundingClientRect();
-		const newPos = e.pageX - gradientWrapRect.left;
-		const percent = newPos/gradientWrapRect.width * 100;
-		const newId = new Date().valueOf();
-
-		if(( e.target.className.indexOf('marker-opacity-wrap') !== -1 )){
-
-			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
-				opacityMarkers: [...this.props.opacityMarkers, 
-					{id: newId, position: percent, opacity: 1}]
-			}))
 		}
 	}
 
@@ -121,23 +105,21 @@ class Gradient extends Component {
 	}
 
 	handleColorTrackClick = (e) => {
-
 		const gradientWrapRect = this.refs.gradientWrap.getBoundingClientRect();
 		const newPos = e.pageX - gradientWrapRect.left;
 		const percent = ( newPos / gradientWrapRect.width ) * 100;
 		const newId = new Date().valueOf();
 
-
-
-		if(( e.target.className.indexOf('marker-color-wrap') !== -1 )){
+		if(( e.target.className.indexOf('marker-color-wrap') !== -1 ) || 
+		   ( e.target.className.indexOf('marker-opacity-wrap') !== -1 )){
 				
 			let prev = 0;
 			let next = 100;
-			let prevColor = '';
-			let nextColor = '';
+			let prevColor = null;
+			let nextColor = null;
 
 			this.props.colorMarkers.map((m, i) => {
-					
+
 				if( percent > m.position && m.position >= prev) {
 					prev = m.position
 					prevColor = m.color
@@ -147,16 +129,19 @@ class Gradient extends Component {
 					next = m.position
 					nextColor = m.color
 				}
-
 			})
+
+			prevColor = prevColor || nextColor;
+			nextColor = nextColor || prevColor;
 
 			const newMarkerPercent = (percent - prev) / (next - prev);
 
 			this.props.updateStyles('gradientStyle', Object.assign({}, this.props.gradientStyle, {
 				colorMarkers: [...this.props.colorMarkers, {
-					id: newId, 
-					position: percent, 
-					color: getColor(nextColor, prevColor, newMarkerPercent ) }].sort((a, b) => a.position - b.position)
+					id: newId,
+					position: percent,
+					color: getColor(nextColor, prevColor, newMarkerPercent ),
+				    opacity: 1 }].sort((a, b) => a.position - b.position)
 			}))
 		}
 	}
@@ -168,7 +153,6 @@ class Gradient extends Component {
 	render(){
 
 		const { colorMarkers,
-				opacityMarkers,
 				selectedColorMarkerId,
 				selectedColorHex,
 				enableGradient} = this.props
@@ -177,7 +161,7 @@ class Gradient extends Component {
 		const sortColors = colorMarkers.sort((a, b) => a.position - b.position);
 
 		for (var i = 0; i < sortColors.length; i++) {
-			bgImageStr += `${(i == 0) ? '':','} rgb(${hexToRgb(sortColors[i].color)}) ${sortColors[i].position}%`;
+			bgImageStr += `${(i == 0) ? '':','} rgba(${hexToRgb(sortColors[i].color)}, ${sortColors[i].opacity}) ${sortColors[i].position}%`;
 		}
 
 		const gradientStyle = {
@@ -193,9 +177,9 @@ class Gradient extends Component {
 					<Toggle on={enableGradient} onToggle={this.enableGradientToggle} />
 					<hr className="pv-spacer"/>
 					<div className="gradient-wrap">
-						<div onClickCapture={this.handleOpacityTrackClick} className="marker-track marker-opacity-wrap">
+						<div onClickCapture={this.handleColorTrackClick} className="marker-track marker-opacity-wrap">
 							{
-								opacityMarkers.map((o, i) => {
+								colorMarkers.map((o, i) => {
 									return <OpacityMarker 
 												onMove={this.handleOpacityDrag}
 												onDelete={this.handleOpacityDelete} 
@@ -255,8 +239,6 @@ Gradient.propTypes = {
 	selectedColorHex: PropTypes.string.isRequired
 }
 
-
-
 class ColorMarker extends Component {
 	constructor(props){
 		super(props)
@@ -272,7 +254,8 @@ class ColorMarker extends Component {
 
 	onMouseDown = (e) => {
 		this.mouseDownTime = e.nativeEvent.timeStamp
-		this.mouseMoveY = e.nativeEvent.y
+		this.mouseMoveY = e.nativeEvent.clientY
+
 		document.addEventListener('mousemove', this.onMouseMove);
 		document.addEventListener('mouseup', this.onMouseUp);
 		e.preventDefault();
@@ -286,10 +269,9 @@ class ColorMarker extends Component {
 	}
 
 	onMouseMove = (e) => {
+		this.props.onMove(this.props.guid, e.clientX)
 
-		this.props.onMove(this.props.guid, e.x)
-
-		if( Math.abs(this.mouseMoveY - e.y) > 40 ) {
+		if( Math.abs(this.mouseMoveY - e.clientY) > 40 ) {
 			this.props.onDelete(this.props.guid)
 		}
 
@@ -323,7 +305,6 @@ class ColorMarker extends Component {
 	}
 
 	render() {
-
 		const style = {
 			background: this.props.color,
 			left: `${this.props.position}%`
@@ -339,7 +320,6 @@ class ColorMarker extends Component {
 			<div className={classes} style={style}>
 				<span className="tip" style={tipStyle}></span>
 				<div className="color-handler" onMouseDown={this.onMouseDown} onClick={this.handleClick}></div>
-
 				{
 					(this.state.open) ? 
 					<div className="color-picker-popover">
@@ -351,7 +331,6 @@ class ColorMarker extends Component {
 							onChange={this.updateColor}/>
 					</div> : null 
 				}
-
 			</div>
 		)
 	}
@@ -399,9 +378,9 @@ class OpacityMarker extends Component {
 
 	onMouseMove = (e) => {
 
-		this.props.onMove(this.props.guid, e.x)
+		this.props.onMove(this.props.guid, e.clientX)
 		
-		if( Math.abs(this.mouseMoveY - e.y) > 40 ) {
+		if( Math.abs(this.mouseMoveY - e.clientY) > 40 ) {
 			this.props.onDelete(this.props.guid)
 		}
 
@@ -418,7 +397,6 @@ class OpacityMarker extends Component {
 		}
 
 		//this.props.onColorMarkerSelect(this.props.guid, this.props.color)
-
 		e.preventDefault();
 	}
 

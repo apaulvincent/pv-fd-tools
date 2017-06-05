@@ -30,13 +30,9 @@ class Main extends Component {
 				boxShadowInset: false,
 				enableGradient: false,
 				gradientStyle: {
-					opacityMarkers: [
-						{id: 1, position: 0, opacity: 1},
-						{id: 2, position: 100, opacity: 1}
-					],
 					colorMarkers: [
-						{id: 1, position: 0, color: '#f0483f'},
-						{id: 2, position: 100, color: '#837ced'},
+						{id: 1, position: 0, color: '#f0483f', opacity: 1},
+						{id: 2, position: 100, color: '#837ced', opacity: 1},
 					]
 				}
 			}
@@ -73,7 +69,7 @@ class Main extends Component {
 		const sortColors = this.state.boxStyles.gradientStyle['colorMarkers'].sort((a, b) => a.position - b.position);
 
 		for (var i = 0; i < sortColors.length; i++) {
-			bgImageStr += `${(i == 0) ? '':','} rgb(${hexToRgb(sortColors[i].color)}) ${sortColors[i].position}%`;
+			bgImageStr += `${(i == 0) ? '':','} rgba(${hexToRgb(sortColors[i].color)}, ${sortColors[i].opacity}) ${sortColors[i].position}%`;
 		}
 
 		const formatBoxStyles = {
@@ -136,7 +132,6 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 						boxShadowInset: this.state.boxStyles.boxShadowInset,
 						enableGradient: this.state.boxStyles.enableGradient,
 						gradientStyle: this.state.boxStyles.gradientStyle,
-						opacityMarkers: this.state.boxStyles.gradientStyle.opacityMarkers,
 						colorMarkers: this.state.boxStyles.gradientStyle.colorMarkers,
 						selectedColorMarkerId: this.state.boxStyles.gradientStyle.selectedColorMarkerId,
 						selectedColorHex: this.state.boxStyles.gradientStyle.selectedColorHex,
