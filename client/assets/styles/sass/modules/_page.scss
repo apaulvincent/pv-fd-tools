@@ -78,12 +78,28 @@ body, html, #root {
   text-align: center;
 }
 
+.anim-box-model-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  padding: 20px;
+  margin-left: 330px;
+  min-width: 400px;
+  background: $c_c_1;
+}
 
 .box-model {
     margin: 60px auto;
     box-sizing: initial;
 }
 
+.anim-box-model {
+    width: 200px;
+    height: 40px;
+    background: #fff;
+}
 
 .box-output-wrap {
     background: #fff;

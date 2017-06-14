@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Menu from '../components/Menu'
 import {BoxModel} from '../components/BoxModel'
+import {AnimationModel} from '../components/AnimationModel'
 import {Output} from '../components/Output'
 
 import {hexToRgb} from '../utils/utility';
@@ -137,7 +138,11 @@ ${this.prefixer(boxShadowPrefix, boxShadowValues)}
 						selectedColorHex: this.state.boxStyles.gradientStyle.selectedColorHex,
 						updateStyles : this.updateStyles,
 						})}
-				<BoxModel styles={formatBoxStyles} wrapStyles={formatWrapperBoxStyles} />
+				{ 
+					( this.props.location.pathname == '/animation') ? 
+				    <AnimationModel/> :
+					<BoxModel styles={formatBoxStyles} wrapStyles={formatWrapperBoxStyles} />
+				}
 				<Output text={boxText} />
 			</div>
 		)
